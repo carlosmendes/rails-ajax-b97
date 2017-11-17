@@ -1,0 +1,23 @@
+// check if the reviews has errors
+<% if @review.errors.any? %>
+  // refresh the form with the errors
+  $('#new_review').html("<%= j render 'reviews/form', restaurant: @restaurant, review: @review %>");
+<% else %>
+  // we want to append the new review to the reviews div
+  new_review = $("<%= j render 'reviews/show', review: @review %>").hide();
+  $('#reviews').append(new_review);
+  new_review.slideDown();
+
+  // refresh the reviews counter
+  $('#reviews-header').html("<%= j pluralize @restaurant.reviews.size, 'review' %>");
+
+  // reseting the form
+  $('#new_review').html("<%= j render 'reviews/form', restaurant: @restaurant, review: Review.new %>");
+
+<% end %>
+
+
+
+// 1 -> inspect on the browser what you want to refresh
+// 2 -> target it with jquery
+// 3 -> check how it is rendered by rails
